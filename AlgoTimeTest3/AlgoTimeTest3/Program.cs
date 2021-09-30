@@ -60,7 +60,10 @@ namespace AlgoTimeTest3
             //BubbleSort(a);
             //QuickSort(a,0,a.Length-1);
             //TimSort(a, a.Length - 1);
-            //Power(b, k);
+            //FastPower(b, k);
+            //int t = RecPow(b, k);
+            //SlowPow(b,k);
+            QuickPow(b, k);
             //MultiplyMatrixes(a, c);
             //VisitAllCells(d);
 
@@ -257,7 +260,7 @@ namespace AlgoTimeTest3
         }
 
         //8
-        static void Power(int x,int k)
+        static void FastPower(int x,int k)
         {
             int c = x;
             int n = k;
@@ -277,8 +280,47 @@ namespace AlgoTimeTest3
             }
         }
 
+        //8
+        static int RecPow(int x,int n)
+        {
+            int f;
+            if (n == 0) return 1;
+            else
+            {
+                f = RecPow(x, n / 2);
+                if (n % 2 == 1) return f * f;
+                else return f * f * x;
+            }
+        }
+
+        static void SlowPow(int x,int n)
+        {
+            int f = 1;
+            int k = 0;
+            while (k<n)
+            {
+                f = f * x;
+                k++;
+            }
+        }
+
+        static void QuickPow(int x,int n)
+        {
+            int c = x;
+            int k = n;
+            int f;
+            f = k % 2 == 1 ? c : 1;
+
+            do
+            {
+                k /= 2;
+                c *= c;
+                if (k % 2 == 1) f *= c;
+            } while (k != 0);
+        }
+
         //9
-        static void MultiplyMatrixes(int[] array1, int[] array2)
+        static void MultiplyMatrixes(int[,] array1, int[,] array2)
         {
             int[,] result = new int[array1.GetLength(0), array1.GetLength(0)];
             for (int i = 0; i < array1.GetLength(0); i++)
@@ -319,11 +361,12 @@ namespace AlgoTimeTest3
             }
         }
 
-        static int[] PrepareArray(int k)
+        static int[,] PrepareArray(int k)
         {
-            int[] array = new int[k];
+            int[,] array = new int[k,k];
             for (int i = 0; i < k; i++)
-                array[i] = Rnd.Next();
+                for (int j=0;j<k;j++)
+                array[i,j] = Rnd.Next();
             return array;
         }
 

@@ -329,7 +329,7 @@ namespace AlgoTimeTest3
                 {
                     for (int l = 0; l < array1.GetLength(0); l++)
                     {
-                        result[i, j] += result[i, l] * result[l, j];
+                        result[i, j] += array1[i, l] * array2[l, j];
                     }
                 }
             }
